@@ -8,7 +8,7 @@ const refs = getRefs();
 
 refs.searchInput.addEventListener('input', debounce(onSearch, 300));
 
-function onSearch(evt) {
+async function onSearch(evt) {
   const searchQuery = evt.target.value.trim();
 
   UI.clearSearchResults();
@@ -17,21 +17,40 @@ function onSearch(evt) {
     return;
   }
 
-  fetchCountries(searchQuery)
-    .then(countries => {
-      const countriesLength = countries.length;
+  //!  Then/Catch syntaxis
+  //   fetchCountries(searchQuery)
+  //     .then(countries => {
+  //       const countriesLength = countries.length;
 
-      if (countriesLength > 10) {
-        Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
-      } else if (countriesLength >= 2 && countriesLength <= 10) {
-        UI.renderCountriesList(countries);
-      } else {
-        UI.renderCountryInfo(countries[0]);
-      }
-    })
-    .catch(handleError);
+  //       if (countriesLength > 10) {
+  //         Notiflix.Notify.info(
+  //           'Too many matches found. Please enter a more specific name.'
+  //         );
+  //       } else if (countriesLength >= 2 && countriesLength <= 10) {
+  //         UI.renderCountriesList(countries);
+  //       } else {
+  //         UI.renderCountryInfo(countries[0]);
+  //       }
+  //     })
+  //     .catch(handleError);
+
+  //!  try...catch syntaxis
+  try {
+    const countries = await fetchCountries(searchQuery);
+    const countriesLength = countries.length;
+
+    if (countriesLength > 10) {
+      Notiflix.Notify.info(
+        'Too many matches found. Please enter a more specific name.'
+      );
+    } else if (countriesLength >= 2 && countriesLength <= 10) {
+      UI.renderCountriesList(countries);
+    } else {
+      UI.renderCountryInfo(countries[0]);
+    }
+  } catch {
+    handleError();
+  }
 }
 
 function handleError() {
