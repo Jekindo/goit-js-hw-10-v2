@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countries</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
+    <script type="module" src="./index.js"></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="container">
+        <input
+          class="search-input"
+          id="search-box"
+          type="text"
+          name="query"
+          placeholder="Введите название страны"
+        />
+      </div>
+    </header>
+
+    <main>
+      <section class="section js-countries-section">
+        <div class="container">
+          <ul class="countries-list js-countries-list"></ul>
+
+          <div class="country-info js-country-info"></div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
